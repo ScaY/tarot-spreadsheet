@@ -1,5 +1,6 @@
 package fr.isen.m2.jee.tarotspreadsheet;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,16 +10,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/createSpreadsheet")
-
 public class CreateSpreadsheet extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        req.setAttribute("name", "name");
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("spreadsheet.jsp");
-        System.out.println("requestDispatcher "+requestDispatcher);
-        requestDispatcher.forward(req, resp);
+    @Inject
+    private Spreadsheet spreadsheet;
+
+    public Spreadsheet getSpreadsheet() {
+        return spreadsheet;
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        int nbPlayer = Integer.valueOf(req.getParameter("nb_player"));
+        String name = req.getParameter("name_spreadsheet");
+        spreadsheet = new Spreadsheet(name, nbPlayer);
+        log("Number of player " + spreadsheet.getNbPlayer());
+        req.getSession().setAttribute("spreadsheet", spreadsheet);
+        req.getRequestDispatcher("/spreadsheet.jsp").include(req, resp);
+    }
+
 
 }

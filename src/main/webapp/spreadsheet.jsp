@@ -1,8 +1,7 @@
 <%@ taglib prefix="c"
            uri="http://java.sun.com/jsp/jstl/core" %>
+<html>
 
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Tarot spreadsheet</title>
@@ -10,7 +9,9 @@
 
 <body>
 <h1>Tarot spreadsheet </h1>
-${name}
+    <c:forEach var="i" begin="1" end="${spreadsheet.nbPlayer}">
+        <p>Player ${i}</p>
+    </c:forEach>
 </body>
 
 </html>
