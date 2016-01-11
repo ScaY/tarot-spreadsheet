@@ -1,5 +1,5 @@
-<%@ taglib prefix="c"
-uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 
 <head>
@@ -12,7 +12,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 <c:forEach var="i" begin="1" end="${spreadsheet.nbPlayer}">
     <p>Joueur ${i}</p>
 </c:forEach>
+
 <form method="post" action="/addScore">
+
 	<table>
 		<tr>
 			<td>
@@ -26,6 +28,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 				</select>
 			</td>
 
+		</tr>
+		<tr>
+			<td> Appelé </td>
+        	<td><select name="appele">
+        		<c:forEach var="i" begin="1" end="${spreadsheet.nbPlayer}">
+        			<option value="joueur${i}">${i}</option>
+        		</c:forEach>
+        	</select></td>
 		</tr>
 		<tr>
 			<td>
