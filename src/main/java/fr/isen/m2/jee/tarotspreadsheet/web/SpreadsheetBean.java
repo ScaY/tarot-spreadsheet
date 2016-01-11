@@ -1,4 +1,4 @@
-package fr.isen.m2.jee.tarotspreadsheet;
+package fr.isen.m2.jee.tarotspreadsheet.web;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -6,16 +6,16 @@ import java.io.Serializable;
 
 @Named("spreadsheet")
 @RequestScoped
-public class Spreadsheet implements Serializable {
+public class SpreadsheetBean implements Serializable {
 
     private String name;
     private int nbPlayer;
 
-    public Spreadsheet() {
+    public SpreadsheetBean() {
         this(null, -1);
     }
 
-    public Spreadsheet(String name, int nbPlayer) {
+    public SpreadsheetBean(String name, int nbPlayer) {
         this.name = name;
         this.nbPlayer = nbPlayer;
     }
