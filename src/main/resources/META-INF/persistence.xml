@@ -1,4 +1,17 @@
-<persistence>
-  <persistence-unit name="db-manager">
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0"
+             xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+                       http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="tarot">
+    <jta-data-source>jdbc/tarot</jta-data-source>
+    <non-jta-data-source>jdbc/tarot-unmanaged</non-jta-data-source>
+    <class>fr.isen.m2.jee.tarotspreadsheet.model.Spreadsheet</class>
+    <class>fr.isen.m2.jee.tarotspreadsheet.model.Model</class>
+    <class>fr.isen.m2.jee.tarotspreadsheet.model.Player</class>
+    <properties>
+      <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
+    </properties>
   </persistence-unit>
 </persistence>

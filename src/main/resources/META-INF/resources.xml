@@ -1,0 +1,18 @@
+<resources>
+  <Resource id="jdbc/tarot" type="javax.sql.DataSource">
+    JdbcDriver = org.hsqldb.jdbcDriver
+    JdbcUrl = jdbc:hsqldb:mem:tarot
+    UserName = SA
+    Password =
+    JtaManaged = true
+  </Resource>
+
+
+  <Resource id="jdbc/tarot-unmanaged" type="javax.sql.DataSource">
+    JdbcDriver = org.hsqldb.jdbcDriver
+    JdbcUrl = jdbc:hsqldb:mem:tarot
+    UserName = SA
+    Password =
+    JtaManaged = false
+  </Resource>
+</resources>
