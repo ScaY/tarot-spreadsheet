@@ -5,13 +5,15 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NamedQueries({
         @NamedQuery(name = "player.list", query = "select p from Player p")
 })
 @XmlRootElement(name = "player")
-public class Player extends Model{
+public class Player extends Model {
 
     @NotNull
     private String name;
@@ -21,6 +23,9 @@ public class Player extends Model{
     @Valid
     @XmlTransient
     private Spreadsheet spreadsheet;
+
+    @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
+    private List<Score> scores = new ArrayList<Score>();
 
     public String getName() {
         return name;
@@ -36,5 +41,13 @@ public class Player extends Model{
 
     public void setSpreadsheet(Spreadsheet spreadsheet) {
         this.spreadsheet = spreadsheet;
+    }
+
+    public List<Score> getScores() {
+        return scores;
+    }
+
+    public void setScores(List<Score> scores) {
+        this.scores = scores;
     }
 }
