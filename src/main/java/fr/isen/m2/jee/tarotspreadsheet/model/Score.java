@@ -30,6 +30,16 @@ public class Score extends Model {
     @XmlTransient
     private Player player;
 
+    private boolean isSuccess;
+
+
+    public Score(int point,boolean isTaken,boolean isCalled,boolean isSuccess){
+        this.point = point;
+        this.isTaken = isTaken;
+        this.isCalled = isCalled;
+        this.isSuccess = isSuccess;
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -61,4 +71,5 @@ public class Score extends Model {
     public void setPoint(int point) {
         this.point = point;
     }
+
 }

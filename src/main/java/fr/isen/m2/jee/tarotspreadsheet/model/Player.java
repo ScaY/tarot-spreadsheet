@@ -50,4 +50,10 @@ public class Player extends Model {
     public void setScores(List<Score> scores) {
         this.scores = scores;
     }
+
+    public Score getLastScore(){return this.scores.get(this.scores.size() - 1);}
+
+    public void addScore(int point,boolean isTaken, boolean isCalled,boolean isSuccess){
+        this.scores.add(new Score(point,isTaken,isCalled,isSuccess));
+    }
 }
