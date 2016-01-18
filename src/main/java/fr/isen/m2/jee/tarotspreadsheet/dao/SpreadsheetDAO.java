@@ -1,49 +1,35 @@
 package fr.isen.m2.jee.tarotspreadsheet.dao;
 
 import fr.isen.m2.jee.tarotspreadsheet.model.Spreadsheet;
+import org.apache.commons.lang.RandomStringUtils;
 
-import javax.ejb.Lock;
-import javax.ejb.LockType;
-import javax.ejb.Singleton;
 import javax.inject.Inject;
-import java.util.List;
+import javax.persistence.EntityManager;
+import javax.transaction.UserTransaction;
 
 
-@Singleton
-@Lock(LockType.READ)
 public class SpreadsheetDAO {
 
     @Inject
-    private DAO dao;
+    EntityManager em;
 
-    public Spreadsheet create(String name, String token, int nbPlayer) {
-        Spreadsheet spreadsheet = new Spreadsheet();
-        spreadsheet.setName(name);
-        spreadsheet.setToken(token);
-        spreadsheet.setNbPlayer(nbPlayer);
-        return dao.create(spreadsheet);
+    @Inject
+    UserTransaction ut;
+
+    public SpreadsheetAdapter createNewSpreadsheet() {
+
+        /*Spreadsheet spreadsheet = new Spreadsheet();
+        spreadsheet.setToken(RandomStringUtils.randomAlphanumeric(10).toLowerCase());
+        SpreadsheetAdapter spreadsheetAdapter = null;
+        try {
+            ut.begin();
+            em.persist(spreadsheet);
+            ut.commit();
+
+        } catch (Exception e) {
+
+        }*/
+        return new SpreadsheetAdapter(new Spreadsheet(), this);
     }
 
-    public Spreadsheet find(long id) {
-        return dao.find(Spreadsheet.class, id);
-    }
-
-    public List<Spreadsheet> list(int first, int max) {
-        return dao.namedFind(Spreadsheet.class, Spreadsheet.LIST, first, max);
-    }
-
-    public void delete(long id) {
-        dao.delete(Spreadsheet.class, id);
-    }
-
-    public Spreadsheet update(long id, String name, String token, int nbPlayer) {
-        Spreadsheet spreadsheet = dao.find(Spreadsheet.class, id);
-        if (spreadsheet == null) {
-            throw new IllegalArgumentException("spreadhseet id " + id + " not found");
-        }
-        spreadsheet.setName(name);
-        spreadsheet.setToken(token);
-        spreadsheet.setNbPlayer(nbPlayer);
-        return dao.update(spreadsheet);
-    }
 }

@@ -1,19 +1,15 @@
 package fr.isen.m2.jee.tarotspreadsheet.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@NamedQueries({
-        @NamedQuery(name = Spreadsheet.LIST, query = "select p from Spreadsheet p")
-})
-@XmlRootElement(name = "spreadsheet")
+@Entity(name = "Spreadsheet")
 public class Spreadsheet extends Model {
 
-    public static final String LIST = "spreadsheet.list";
 
     @NotNull
     private String name;
@@ -26,6 +22,16 @@ public class Spreadsheet extends Model {
 
     @OneToMany(mappedBy = "spreadsheet", fetch = FetchType.EAGER)
     private List<Player> players = new ArrayList<Player>();
+
+    public Spreadsheet() {
+        this("Hello", 5, "token");
+    }
+
+    public Spreadsheet(String name, int nbPlayer, String token) {
+        this.name = name;
+        this.nbPlayer = nbPlayer;
+        this.token = token;
+    }
 
     public String getName() {
         return name;

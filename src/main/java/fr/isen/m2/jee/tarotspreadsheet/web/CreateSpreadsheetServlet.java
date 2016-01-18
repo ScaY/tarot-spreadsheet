@@ -1,5 +1,8 @@
 package fr.isen.m2.jee.tarotspreadsheet.web;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,20 +14,19 @@ import java.io.IOException;
 @WebServlet("/createSpreadsheet")
 public class CreateSpreadsheetServlet extends HttpServlet {
 
-    @Inject
-    private SpreadsheetBean spreadsheet;
+    private static final Log LOG = LogFactory.getLog(CreateSpreadsheetServlet.class);
 
-    public SpreadsheetBean getSpreadsheet() {
-        return spreadsheet;
-    }
+    @Inject
+    SpreadsheetBean spreadsheet;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log("Do get CreateSpreadsheet");
         int nbPlayer = Integer.valueOf(req.getParameter("nb_joueur"));
         String name = req.getParameter("nom_feuille");
-        spreadsheet = new SpreadsheetBean(name, nbPlayer);
-        log("Number of player " + spreadsheet.getNbPlayer());
-        req.getSession().setAttribute("spreadsheet", spreadsheet);
+
+        spreadsheet.createNewSpreadsheet();
+
         req.getRequestDispatcher("/spreadsheet.jsp").include(req, resp);
     }
 

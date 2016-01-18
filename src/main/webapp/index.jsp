@@ -10,7 +10,7 @@
 <body>
 <h1>Create a Tarot spreadsheet</h1>
 
-<form method="post" action="/createSpreadsheet">
+<form method="post" action="./createSpreadsheet">
     <table>
         <tr>
             <td>Nom</td>
@@ -19,7 +19,7 @@
         <tr>
             <td>Nombre de joueur</td>
             <td><select name="nb_joueur">
-                <option value="3">3</option>
+                <option value= "3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
             </select></td>
