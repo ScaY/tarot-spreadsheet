@@ -89,10 +89,10 @@
 			</td>
 			<td>
 				<select name="poignee">
-					<option value="none">Aucune</option>
-					<option value="simple">Simple</option>
-					<option value="doule">Double</option>
-					<option value="triple">Triple</option>
+					<option value="0">Aucune</option>
+					<option value="1">Simple</option>
+					<option value="2">Double</option>
+					<option value="3">Triple</option>
 				</select>
 			</td>
 			<td>
