@@ -49,10 +49,11 @@
 		</tr>
 		<tr>
 			<td>
-				Nombre d'atout
+				Nombre de bout
 			</td>
 			<td>
-				<select name="nb_atout">
+				<select name="nb_bout">
+					<option value="0">0</option>
 					<option value="1">1</option>
 					<option value="2">2</option>
 					<option value="3">3</option>
@@ -63,10 +64,10 @@
 			<td>Contrat</td>
 			<td>
 				<select name="contrat">
-					<option value="prise">Prise</option>
-					<option value="garde">Garde</option>
-					<option value="garde_sans">Garde sans</option>
-					<option value="garde_contre">Garde contre</option>
+					<option value="0">Prise</option>
+					<option value="1">Garde</option>
+					<option value="2">Garde sans</option>
+					<option value="3">Garde contre</option>
 				</select>
 			</td>
 		<tr>
@@ -76,6 +77,7 @@
 			</td>
 			<td>
 				<select name="petit_au_bout">
+					<option value="none">Aucun</option>
 					<option value="attaque">Attaque</option>
 					<option value="defense">Defense</option>
 				</select>
@@ -87,6 +89,7 @@
 			</td>
 			<td>
 				<select name="poignee">
+					<option value="none">Aucune</option>
 					<option value="simple">Simple</option>
 					<option value="doule">Double</option>
 					<option value="triple">Triple</option>
@@ -94,6 +97,7 @@
 			</td>
 			<td>
 				<select name="poignee_equipe">
+					<option value="none">Aucune</option>
 					<option value="attaque">Attaque</option>
 					<option value="defense">Defense</option>
 				</select>
@@ -105,12 +109,58 @@
 			</td>
 			<td>
 				<select name="chelem_equipe">
+					<option value="none">Aucune</option>
 					<option value="attaque">Attaque</option>
 					<option value="defense">Defense</option>
 				</select>
 			</td>
+			 <td>
+				 <select name="chelem_score">
+					 <option value="callButNotDone">Annoncé mais non faite</option>
+					 <option value="notCallButDone">Non annoncé et faite</option>
+					 <option value="CallAndDone">Annoncé et faite</option>
+				 </select>
+			 </td>
 		</tr>
-
+		<tr>
+			<td>
+				Misère
+			</td>
+			<td>
+				<select name="misere_1">
+					<option value="0">Aucune</option>
+					<c:forEach var="i" begin="1" end="${spreadsheet.nbPlayer}">
+						<option value="joueur${i}">${i}</option>
+					</c:forEach>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Misère
+			</td>
+			<td>
+				<select name="misere_2">
+					<option value="0">Aucune</option>
+					<c:forEach var="i" begin="1" end="${spreadsheet.nbPlayer}">
+						<option value="joueur${i}">${i}</option>
+					</c:forEach>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Misère
+			</td>
+			<td>
+				<select name="misere_3">
+					<option value="0">Aucune</option>
+					<c:forEach var="i" begin="1" end="${spreadsheet.nbPlayer}">
+						<option value="joueur${i}">${i}</option>
+					</c:forEach>
+				</select>
+			</td>
+		</tr>
 	</table>
 
     <input type="submit" value="Create"/>
