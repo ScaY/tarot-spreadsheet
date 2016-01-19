@@ -1,7 +1,6 @@
 package fr.isen.m2.jee.tarotspreadsheet.dao;
 
 import fr.isen.m2.jee.tarotspreadsheet.model.Spreadsheet;
-import org.apache.commons.lang.RandomStringUtils;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -31,9 +30,11 @@ public class SpreadsheetDAO {
     }
 
     public SpreadsheetAdapter loadFromToken(String token) {
-        Spreadsheet spreadsheet = (Spreadsheet) em
-                .createQuery("SELECT s FROM Game s WHERE s.token = :token")
+        Spreadsheet game = (Spreadsheet) em
+                .createQuery("SELECT s FROM Spreadsheet s WHERE s.token = :token")
                 .setParameter("token", token).getSingleResult();
-        return new SpreadsheetAdapter(spreadsheet, this);
+
+        return new SpreadsheetAdapter(game, this);
     }
+
 }

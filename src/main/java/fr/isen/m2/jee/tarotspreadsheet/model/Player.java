@@ -1,30 +1,35 @@
 package fr.isen.m2.jee.tarotspreadsheet.model;
 
 import javax.persistence.*;
+import javax.print.attribute.standard.MediaSize;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 @Entity
-@NamedQueries({
-        @NamedQuery(name = "player.list", query = "select p from Player p")
-})
-@XmlRootElement(name = "player")
-public class Player extends Model {
+public class Player {
+
+    public static final String NAME = "name";
+    public static final String ID = "id";
+    public static final String SPREADSHEET = "spreadsheet";
+    public static final String SCORES = "scores";
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @NotNull
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "spreadsheet_id")
-    @Valid
-    @XmlTransient
     private Spreadsheet spreadsheet;
 
-    @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    @OrderColumn(name = "index")
     private List<Score> scores = new ArrayList<Score>();
 
     public String getName() {
@@ -51,9 +56,11 @@ public class Player extends Model {
         this.scores = scores;
     }
 
-    public Score getLastScore(){return this.scores.get(this.scores.size() - 1);}
+    public Score getLastScore() {
+        return this.scores.get(this.scores.size() - 1);
+    }
 
-    public void addScore(int point,boolean isTaken, boolean isCalled,boolean isSuccess){
-        this.scores.add(new Score(point,isTaken,isCalled,isSuccess));
+    public void addScore(int point, boolean isTaken, boolean isCalled, boolean isSuccess) {
+        this.scores.add(new Score(point, isTaken, isCalled, isSuccess));
     }
 }

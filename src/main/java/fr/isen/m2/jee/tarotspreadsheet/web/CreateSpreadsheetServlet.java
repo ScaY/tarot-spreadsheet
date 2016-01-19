@@ -27,9 +27,9 @@ public class CreateSpreadsheetServlet extends HttpServlet {
         String name = req.getParameter("nom_feuille");
         String token = RandomStringUtils.randomAlphanumeric(10).toLowerCase();
         spreadsheet.createNewSpreadsheet(name, nbPlayer, token);
-
+        spreadsheet.loadFromToken(token);
+        log("Spreadsheet load from token : " + spreadsheet.getSpreadsheetAdapter().getSpreadsheet().getName());
         req.getRequestDispatcher("/spreadsheet.jsp").include(req, resp);
     }
-
 
 }

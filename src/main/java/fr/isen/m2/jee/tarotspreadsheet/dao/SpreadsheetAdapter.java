@@ -16,4 +16,16 @@ public class SpreadsheetAdapter {
     public Spreadsheet getSpreadsheet() {
         return spreadsheet;
     }
+
+    public String getToken() {
+        return spreadsheet.getToken();
+    }
+
+    public String getName() {
+        return spreadsheet.getName();
+    }
+
+    public int getNbPlayer() {
+        return spreadsheet.getNbPlayer();
+    }
 }

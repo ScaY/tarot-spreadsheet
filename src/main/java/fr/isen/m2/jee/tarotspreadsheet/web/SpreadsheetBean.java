@@ -17,13 +17,21 @@ public class SpreadsheetBean implements Serializable {
     @Inject
     SpreadsheetDAO dao;
 
+    public int getNbPlayer() {
+        return spreadsheetAdapter.getSpreadsheet().getNbPlayer();
+    }
+
+    public SpreadsheetAdapter getSpreadsheetAdapter() {
+        return spreadsheetAdapter;
+    }
+
     public void createNewSpreadsheet(String name, int nbPlayer, String token) {
         spreadsheetAdapter = dao.createNewSpreadsheet(name, nbPlayer, token);
     }
 
-
-    public int getNbPlayer() {
-        return spreadsheetAdapter.getSpreadsheet().getNbPlayer();
+    public void loadFromToken(String token) {
+        spreadsheetAdapter = dao.loadFromToken(token);
     }
+
 
 }

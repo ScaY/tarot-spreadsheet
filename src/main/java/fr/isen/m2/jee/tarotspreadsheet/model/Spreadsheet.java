@@ -5,18 +5,21 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = Spreadsheet.NAME)
-public class Spreadsheet extends Model {
+@Entity
+public class Spreadsheet {
 
-    public static final String NAME = "Spreadsheet";
+    public static final String TOKEN = "token";
+    public static final String ID = "id";
+    public static final String NB_PLAYER = "nbPlayer";
+    public static final String NAME = "name";
+    public static final String PLAYERS = "players";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(mappedBy = "spreadsheet", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @OrderColumn(name = "index")
-    private List<Player> players = new ArrayList<>();
+    @NotNull
+    private String token;
 
     @NotNull
     private String name;
@@ -24,11 +27,13 @@ public class Spreadsheet extends Model {
     @NotNull
     private int nbPlayer;
 
-    @NotNull
-    private String token;
+    @OneToMany(mappedBy = "spreadsheet", cascade = CascadeType.ALL)
+    @OrderColumn(name = "index")
+    private List<Player> players = new ArrayList<>();
+
 
     public Spreadsheet() {
-        this("Null", 0, "Null");
+        this(null, 0, null);
     }
 
     public Spreadsheet(String name, int nbPlayer, String token) {
@@ -71,5 +76,9 @@ public class Spreadsheet extends Model {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

@@ -7,13 +7,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
-@NamedQueries({
-        @NamedQuery(name = Score.LIST, query = "select p from Score p")
-})
-@XmlRootElement(name = "score")
-public class Score extends Model {
+public class Score {
 
-    public static final String LIST = "score.list";
+    public static final String POINT = "point";
+    public static final String ID = "id";
+    public static final String CALLED = "called";
+    public static final String TAKEN = "taken";
+    public static final String SUCCESS = "success";
+    public static final String PLAYER = "player";
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @NotNull
     private int point;
@@ -25,11 +30,9 @@ public class Score extends Model {
     private boolean isTaken;
 
     @ManyToOne
-    @JoinColumn(name = "player_id")
-    @Valid
-    @XmlTransient
     private Player player;
 
+    @NotNull
     private boolean isSuccess;
 
     public Score() {
@@ -74,4 +77,15 @@ public class Score extends Model {
         this.point = point;
     }
 
+    public void setSuccess(boolean success) {
+        isSuccess = success;
+    }
+
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }
