@@ -10,19 +10,20 @@ import java.io.Serializable;
 
 @Named("spreadsheet")
 @RequestScoped
-public class SpreadsheetBean implements Serializable{
+public class SpreadsheetBean implements Serializable {
 
     SpreadsheetAdapter spreadsheetAdapter;
 
     @Inject
     SpreadsheetDAO dao;
 
-    public void createNewSpreadsheet(){
-        spreadsheetAdapter = dao.createNewSpreadsheet();
+    public void createNewSpreadsheet(String name, int nbPlayer, String token) {
+        spreadsheetAdapter = dao.createNewSpreadsheet(name, nbPlayer, token);
     }
 
 
-    public int getNbPlayer(){
+    public int getNbPlayer() {
         return spreadsheetAdapter.getSpreadsheet().getNbPlayer();
     }
+
 }

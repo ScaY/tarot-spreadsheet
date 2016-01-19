@@ -1,15 +1,22 @@
 package fr.isen.m2.jee.tarotspreadsheet.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "Spreadsheet")
+@Entity(name = Spreadsheet.NAME)
 public class Spreadsheet extends Model {
 
+    public static final String NAME = "Spreadsheet";
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @OneToMany(mappedBy = "spreadsheet", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OrderColumn(name = "index")
+    private List<Player> players = new ArrayList<>();
 
     @NotNull
     private String name;
@@ -20,11 +27,8 @@ public class Spreadsheet extends Model {
     @NotNull
     private String token;
 
-    @OneToMany(mappedBy = "spreadsheet", fetch = FetchType.EAGER)
-    private List<Player> players = new ArrayList<Player>();
-
     public Spreadsheet() {
-        this("Hello", 5, "token");
+        this("Null", 0, "Null");
     }
 
     public Spreadsheet(String name, int nbPlayer, String token) {

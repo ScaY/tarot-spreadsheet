@@ -1,5 +1,6 @@
 package fr.isen.m2.jee.tarotspreadsheet.web;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -24,8 +25,8 @@ public class CreateSpreadsheetServlet extends HttpServlet {
         log("Do get CreateSpreadsheet");
         int nbPlayer = Integer.valueOf(req.getParameter("nb_joueur"));
         String name = req.getParameter("nom_feuille");
-
-        spreadsheet.createNewSpreadsheet();
+        String token = RandomStringUtils.randomAlphanumeric(10).toLowerCase();
+        spreadsheet.createNewSpreadsheet(name, nbPlayer, token);
 
         req.getRequestDispatcher("/spreadsheet.jsp").include(req, resp);
     }

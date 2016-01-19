@@ -32,8 +32,10 @@ public class Score extends Model {
 
     private boolean isSuccess;
 
+    public Score() {
+    }
 
-    public Score(int point,boolean isTaken,boolean isCalled,boolean isSuccess){
+    public Score(int point, boolean isTaken, boolean isCalled, boolean isSuccess) {
         this.point = point;
         this.isTaken = isTaken;
         this.isCalled = isCalled;

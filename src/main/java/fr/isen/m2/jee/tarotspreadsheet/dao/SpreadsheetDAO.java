@@ -16,11 +16,9 @@ public class SpreadsheetDAO {
     @Inject
     UserTransaction ut;
 
-    public SpreadsheetAdapter createNewSpreadsheet() {
+    public SpreadsheetAdapter createNewSpreadsheet(String name, int nbPlayer, String token) {
 
-        /*Spreadsheet spreadsheet = new Spreadsheet();
-        spreadsheet.setToken(RandomStringUtils.randomAlphanumeric(10).toLowerCase());
-        SpreadsheetAdapter spreadsheetAdapter = null;
+        Spreadsheet spreadsheet = new Spreadsheet(name, nbPlayer, token);
         try {
             ut.begin();
             em.persist(spreadsheet);
@@ -28,8 +26,14 @@ public class SpreadsheetDAO {
 
         } catch (Exception e) {
 
-        }*/
-        return new SpreadsheetAdapter(new Spreadsheet(), this);
+        }
+        return new SpreadsheetAdapter(spreadsheet, this);
     }
 
+    public SpreadsheetAdapter loadFromToken(String token) {
+        Spreadsheet spreadsheet = (Spreadsheet) em
+                .createQuery("SELECT s FROM Game s WHERE s.token = :token")
+                .setParameter("token", token).getSingleResult();
+        return new SpreadsheetAdapter(spreadsheet, this);
+    }
 }
