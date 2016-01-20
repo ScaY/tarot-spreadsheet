@@ -24,22 +24,23 @@ public class Spreadsheet {
     @NotNull
     private String name;
 
-    @NotNull
-    private int nbPlayer;
-
     @OneToMany(mappedBy = "spreadsheet", cascade = CascadeType.ALL)
     @OrderColumn(name = "index")
     private List<Player> players = new ArrayList<>();
 
 
     public Spreadsheet() {
-        this(null, 0, null);
+        this(null, null);
     }
 
-    public Spreadsheet(String name, int nbPlayer, String token) {
-        this.name = name;
-        this.nbPlayer = nbPlayer;
+    public Spreadsheet(String token, String name) {
+        this(token, name, new ArrayList<Player>());
+    }
+
+    public Spreadsheet(String token, String name, List<Player> players) {
         this.token = token;
+        this.name = name;
+        this.players = players;
     }
 
     public String getName() {
@@ -51,11 +52,7 @@ public class Spreadsheet {
     }
 
     public int getNbPlayer() {
-        return nbPlayer;
-    }
-
-    public void setNbPlayer(int nbPlayer) {
-        this.nbPlayer = nbPlayer;
+        return this.getPlayers().size();
     }
 
     public List<Player> getPlayers() {
@@ -68,6 +65,10 @@ public class Spreadsheet {
 
     public void addPlayer(Player player) {
         players.add(player);
+    }
+
+    public Player getPlayer(int i) {
+        return players.get(i);
     }
 
     public String getToken() {

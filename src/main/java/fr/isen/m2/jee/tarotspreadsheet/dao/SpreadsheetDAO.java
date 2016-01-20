@@ -1,10 +1,13 @@
 package fr.isen.m2.jee.tarotspreadsheet.dao;
 
+import fr.isen.m2.jee.tarotspreadsheet.model.Player;
 import fr.isen.m2.jee.tarotspreadsheet.model.Spreadsheet;
+import org.apache.commons.lang.RandomStringUtils;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.transaction.UserTransaction;
+import javax.transaction.*;
+import java.util.List;
 
 
 public class SpreadsheetDAO {
@@ -15,9 +18,10 @@ public class SpreadsheetDAO {
     @Inject
     UserTransaction ut;
 
-    public SpreadsheetAdapter createNewSpreadsheet(String name, int nbPlayer, String token) {
+    public SpreadsheetAdapter createNewSpreadsheet(String name) {
 
-        Spreadsheet spreadsheet = new Spreadsheet(name, nbPlayer, token);
+        String token = RandomStringUtils.randomAlphanumeric(10).toLowerCase();
+        Spreadsheet spreadsheet = new Spreadsheet(token, name);
         try {
             ut.begin();
             em.persist(spreadsheet);
@@ -37,4 +41,16 @@ public class SpreadsheetDAO {
         return new SpreadsheetAdapter(game, this);
     }
 
+    public void save(Spreadsheet spreadsheet) {
+        try {
+            ut.begin();
+            em.merge(spreadsheet);
+            ut.commit();
+        } catch (SecurityException | IllegalStateException | RollbackException
+                | HeuristicMixedException | HeuristicRollbackException
+                | SystemException | NotSupportedException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -31,6 +32,16 @@ public class Player {
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     @OrderColumn(name = "index")
     private List<Score> scores = new ArrayList<Score>();
+
+    public Player() {
+        this(null, null);
+    }
+
+    public Player(String name, Spreadsheet spreadsheet) {
+        this.name = name;
+        this.spreadsheet = spreadsheet;
+        this.scores = new LinkedList<>();
+    }
 
     public String getName() {
         return name;

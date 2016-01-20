@@ -25,8 +25,8 @@ public class SpreadsheetBean implements Serializable {
         return spreadsheetAdapter;
     }
 
-    public void createNewSpreadsheet(String name, int nbPlayer, String token) {
-        spreadsheetAdapter = dao.createNewSpreadsheet(name, nbPlayer, token);
+    public void createNewSpreadsheet(String name) {
+        spreadsheetAdapter = dao.createNewSpreadsheet(name);
     }
 
     public void loadFromToken(String token) {

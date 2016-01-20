@@ -36,6 +36,11 @@ public class Score {
     private boolean isSuccess;
 
     public Score() {
+        this(0);
+    }
+
+    public Score(int point) {
+        this(point, false, false, false);
     }
 
     public Score(int point, boolean isTaken, boolean isCalled, boolean isSuccess) {

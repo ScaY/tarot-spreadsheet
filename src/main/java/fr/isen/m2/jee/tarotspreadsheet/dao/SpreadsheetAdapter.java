@@ -1,6 +1,9 @@
 package fr.isen.m2.jee.tarotspreadsheet.dao;
 
+import fr.isen.m2.jee.tarotspreadsheet.model.Player;
 import fr.isen.m2.jee.tarotspreadsheet.model.Spreadsheet;
+
+import java.util.List;
 
 public class SpreadsheetAdapter {
 
@@ -28,4 +31,13 @@ public class SpreadsheetAdapter {
     public int getNbPlayer() {
         return spreadsheet.getNbPlayer();
     }
+
+    public Player getPlayer(int i){
+        return spreadsheet.getPlayer(i);
+    }
+    public void addPlayer(String name) {
+        spreadsheet.addPlayer(new Player(name, spreadsheet));
+        spreadsheetDAO.save(spreadsheet);
+    }
+
 }
