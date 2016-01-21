@@ -28,15 +28,25 @@ public class SpreadsheetAdapter {
         return spreadsheet.getName();
     }
 
+    public List<Player> getPlayers() {
+        return spreadsheet.getPlayers();
+    }
+
     public int getNbPlayer() {
         return spreadsheet.getNbPlayer();
     }
 
-    public Player getPlayer(int i){
+    public Player getPlayer(int i) {
         return spreadsheet.getPlayer(i);
     }
+
     public void addPlayer(String name) {
         spreadsheet.addPlayer(new Player(name, spreadsheet));
+        spreadsheetDAO.save(spreadsheet);
+    }
+
+    public void addScore(String name, int point, boolean isTaken, boolean isCalled, boolean isSuccess) {
+        spreadsheet.getPlayer(name).addScore(point, isTaken, isCalled, isSuccess);
         spreadsheetDAO.save(spreadsheet);
     }
 

@@ -1,15 +1,10 @@
 package fr.isen.m2.jee.tarotspreadsheet.model;
 
 import javax.persistence.*;
-import javax.print.attribute.standard.MediaSize;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 @Entity
 public class Player {
@@ -29,9 +24,9 @@ public class Player {
     @ManyToOne
     private Spreadsheet spreadsheet;
 
-    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @OrderColumn(name = "index")
-    private List<Score> scores = new ArrayList<Score>();
+    private List<Score> scores = new ArrayList<>();
 
     public Player() {
         this(null, null);
@@ -72,6 +67,10 @@ public class Player {
     }
 
     public void addScore(int point, boolean isTaken, boolean isCalled, boolean isSuccess) {
-        this.scores.add(new Score(point, isTaken, isCalled, isSuccess));
+        this.scores.add(new Score(point, isTaken, isCalled, isSuccess, this));
+    }
+
+    public Long getId() {
+        return id;
     }
 }

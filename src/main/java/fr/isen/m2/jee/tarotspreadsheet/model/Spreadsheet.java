@@ -24,7 +24,7 @@ public class Spreadsheet {
     @NotNull
     private String name;
 
-    @OneToMany(mappedBy = "spreadsheet", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "spreadsheet", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     @OrderColumn(name = "index")
     private List<Player> players = new ArrayList<>();
 
@@ -57,6 +57,18 @@ public class Spreadsheet {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public Player getPlayer(String name) {
+        Player result = null;
+        int i = 0;
+        while (result == null && i < getNbPlayer()) {
+            if (players.get(i).getName().equals(name)) {
+                result = players.get(i);
+            }
+            i++;
+        }
+        return result;
     }
 
     public void setPlayers(List<Player> players) {

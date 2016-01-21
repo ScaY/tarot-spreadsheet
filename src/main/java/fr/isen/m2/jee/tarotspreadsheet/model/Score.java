@@ -1,10 +1,7 @@
 package fr.isen.m2.jee.tarotspreadsheet.model;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 public class Score {
@@ -40,14 +37,15 @@ public class Score {
     }
 
     public Score(int point) {
-        this(point, false, false, false);
+        this(point, false, false, false, null);
     }
 
-    public Score(int point, boolean isTaken, boolean isCalled, boolean isSuccess) {
+    public Score(int point, boolean isTaken, boolean isCalled, boolean isSuccess, Player player) {
         this.point = point;
         this.isTaken = isTaken;
         this.isCalled = isCalled;
         this.isSuccess = isSuccess;
+        this.player = player;
     }
 
     public Player getPlayer() {
