@@ -17,8 +17,15 @@ public class SpreadsheetBean implements Serializable {
     @Inject
     SpreadsheetDAO dao;
 
+    public SpreadsheetBean() {
+    }
+
+    public SpreadsheetBean(SpreadsheetAdapter spreadsheetAdapter) {
+        this.spreadsheetAdapter = spreadsheetAdapter;
+    }
+
     public int getNbPlayer() {
-        return spreadsheetAdapter.getSpreadsheet().getNbPlayer();
+        return spreadsheetAdapter.getNbPlayer();
     }
 
     public SpreadsheetAdapter getSpreadsheetAdapter() {
@@ -33,5 +40,12 @@ public class SpreadsheetBean implements Serializable {
         spreadsheetAdapter = dao.loadFromToken(token);
     }
 
+    public String getName() {
+        return spreadsheetAdapter.getName();
+    }
+
+    public String getToken() {
+        return spreadsheetAdapter.getToken();
+    }
 
 }

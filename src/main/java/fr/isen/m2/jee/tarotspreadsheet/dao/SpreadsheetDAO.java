@@ -1,20 +1,19 @@
 package fr.isen.m2.jee.tarotspreadsheet.dao;
 
-import fr.isen.m2.jee.tarotspreadsheet.model.Player;
-import fr.isen.m2.jee.tarotspreadsheet.model.Score;
 import fr.isen.m2.jee.tarotspreadsheet.model.Spreadsheet;
 import org.apache.commons.lang.RandomStringUtils;
 
-import javax.inject.Inject;
 import javax.persistence.NoResultException;
 import javax.transaction.*;
+import javax.ws.rs.GET;
 import java.util.List;
 
 
 public class SpreadsheetDAO extends DAO {
 
 
-    private static final String GET_ALL_SPREADSHEET = "SELECT s FROM Spreadsheet s WHERE s.token = :token";
+    private static final String GET_SPREADSHEET = "SELECT s FROM Spreadsheet s WHERE s.token = :token";
+    private static final String GET_ALL = "SELECT s FROM Spreadsheet s";
 
     /**
      * Create a spreadsheet adapter with a name
@@ -44,12 +43,20 @@ public class SpreadsheetDAO extends DAO {
     public SpreadsheetAdapter loadFromToken(String token) {
         try {
             Spreadsheet game = (Spreadsheet) em
-                    .createQuery(GET_ALL_SPREADSHEET)
+                    .createQuery(GET_SPREADSHEET)
                     .setParameter("token", token).getSingleResult();
 
 
             return new SpreadsheetAdapter(game, this);
         } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    public List<Spreadsheet> getAll(){
+        try{
+            return em.createQuery(GET_ALL).getResultList();
+        }catch(NoResultException e){
             return null;
         }
     }
@@ -60,16 +67,8 @@ public class SpreadsheetDAO extends DAO {
      */
     public void deleteFromToken(String token) {
         try {
-            Spreadsheet spreadsheet = (Spreadsheet) em.createQuery(GET_ALL_SPREADSHEET).setParameter("token", token).getSingleResult();
-            /*for (Player player : spreadsheet.getPlayers()){
-                // Deleting the player's score
-                scoreDAO.delete(player.getId());
-                // Delete the player
-                playerDAO.deleteById( player.getId());
-            }*/
-
-            // Deleting the spreadsheet
             ut.begin();
+            Spreadsheet spreadsheet = (Spreadsheet) em.createQuery(GET_SPREADSHEET).setParameter("token", token).getSingleResult();
             em.remove(spreadsheet);
             ut.commit();
         } catch (SecurityException | IllegalStateException | RollbackException

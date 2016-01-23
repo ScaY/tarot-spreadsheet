@@ -31,10 +31,11 @@ public class SpreadsheetDAOTest {
     @Inject
     ScoreDAO scoreDAO;
 
-
     @Test
     public void daoIsInjected() throws Exception {
         assertThat(spreadsheetDAO).isNotNull();
+        assertThat(playerDAO).isNotNull();
+        assertThat(scoreDAO).isNotNull();
     }
 
     @Test
@@ -49,6 +50,7 @@ public class SpreadsheetDAOTest {
         for (int i = 0; i < nbPlayer; i++) {
             spreadsheet.addPlayer(namePlayer + i);
         }
+        // Reload the spreadsheet and check if has been added with the correct attributes
         String token = spreadsheet.getToken();
         assertThat(spreadsheet.getToken()).isNotNull();
         spreadsheet = spreadsheetDAO.loadFromToken(token);

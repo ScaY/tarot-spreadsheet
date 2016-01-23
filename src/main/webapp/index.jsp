@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix ="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -19,7 +19,7 @@
         <tr>
             <td>Nombre de joueur</td>
             <td><select name="nb_joueur">
-                <option value= "3">3</option>
+                <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
             </select></td>
@@ -29,9 +29,16 @@
 </form>
 
 
-<c:forEach var="spreadsheet" items="${listSpreadsheet}">
-	<p>${spreadsheet.name}</p>
-</c:forEach>
+<table>
+    <c:forEach var="nameSpreadsheet" items="${listSpreadsheet.spreadsheetList}">
+        <tr>
+            <td>${nameSpreadsheet}</td>
+            <td><a href="./">Edit</a></td>
+            <td><a href="./">Delete</a></td>
+        </tr>
+    </c:forEach>
+</table>
+
 </body>
 
 </html>
