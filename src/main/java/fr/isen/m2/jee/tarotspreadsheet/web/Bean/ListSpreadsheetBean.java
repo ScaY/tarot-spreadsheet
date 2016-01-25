@@ -1,4 +1,4 @@
-package fr.isen.m2.jee.tarotspreadsheet.web;
+package fr.isen.m2.jee.tarotspreadsheet.web.Bean;
 
 import fr.isen.m2.jee.tarotspreadsheet.dao.SpreadsheetDAO;
 import fr.isen.m2.jee.tarotspreadsheet.model.Spreadsheet;
@@ -8,8 +8,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by stephane on 23/01/16.
@@ -19,24 +19,20 @@ import java.util.List;
 @RequestScoped
 public class ListSpreadsheetBean implements Serializable {
 
-    List<String> spreadsheetList;
+    Map<String, String> spreadsheetList;
 
     @Inject
     SpreadsheetDAO spreadsheetDAO;
 
     @PostConstruct
     public void init() {
-        spreadsheetList = new LinkedList<>();
+        spreadsheetList = new HashMap<>();
         for(Spreadsheet spreadsheet : spreadsheetDAO.getAll()){
-            spreadsheetList.add(spreadsheet.getName());
+            spreadsheetList.put(spreadsheet.getToken(), spreadsheet.getName());
         }
     }
 
-    public void addSpreadsheetName(String name) {
-        spreadsheetList.add(name);
-    }
-
-    public List<String> getSpreadsheetList() {
+    public Map<String, String> getSpreadsheetList() {
         return spreadsheetList;
     }
 }

@@ -2,12 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Tarot spreadsheet</title>
-</head>
-
 <body>
+
 <h1>Create a Tarot spreadsheet</h1>
 
 <form method="post" action="./createSpreadsheet">
@@ -32,13 +28,17 @@
 <table>
     <c:forEach var="nameSpreadsheet" items="${listSpreadsheet.spreadsheetList}">
         <tr>
-            <td>${nameSpreadsheet}</td>
-            <td><a href="./">Edit</a></td>
-            <td><a href="./">Delete</a></td>
+            <td>${nameSpreadsheet.value}</td>
+            <td><a href="./s/${nameSpreadsheet.key}">Edit</a></td>
+            <td><a href="./deleteSpreadsheet/${nameSpreadsheet.key}">Delete</a></td>
         </tr>
     </c:forEach>
 </table>
 
 </body>
+<head>
+    <meta charset="UTF-8">
+    <title>Tarot spreadsheet</title>
+</head>
 
 </html>

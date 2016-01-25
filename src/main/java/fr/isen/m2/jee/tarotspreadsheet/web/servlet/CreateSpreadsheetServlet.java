@@ -1,4 +1,6 @@
-package fr.isen.m2.jee.tarotspreadsheet.web;
+package fr.isen.m2.jee.tarotspreadsheet.web.servlet;
+
+import fr.isen.m2.jee.tarotspreadsheet.web.Bean.SpreadsheetBean;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -8,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/createSpreadsheet")
+@WebServlet(urlPatterns = "/createSpreadsheet")
 public class CreateSpreadsheetServlet extends HttpServlet {
 
     @Inject
@@ -21,8 +23,9 @@ public class CreateSpreadsheetServlet extends HttpServlet {
         // Create the spreadsheet and add the player
         spreadsheet.createNewSpreadsheet(name);
         for (int i = 0; i < nbPlayer; i++) {
-            spreadsheet.getSpreadsheetAdapter().addPlayer("Player " + i);
+            spreadsheet.getSpreadsheetAdapter().addPlayer("player" + i);
         }
+        //req.getSession().setAttribute("spreadsheetBean", spreadsheet);
         resp.sendRedirect(req.getContextPath()
                 + req.getServletPath().replace("createSpreadsheet", "") + "s/" + spreadsheet.getToken());
     }

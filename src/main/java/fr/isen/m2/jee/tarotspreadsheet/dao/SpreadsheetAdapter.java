@@ -41,7 +41,9 @@ public class SpreadsheetAdapter {
     }
 
     public void addPlayer(String name) {
-        spreadsheet.addPlayer(new Player(name, spreadsheet));
+        Player player = new Player(name, spreadsheet);
+        player.addScore(42, false, false, false);
+        spreadsheet.addPlayer(player);
         spreadsheetDAO.save(spreadsheet);
     }
 

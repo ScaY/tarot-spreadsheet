@@ -1,6 +1,8 @@
-package fr.isen.m2.jee.tarotspreadsheet.web;
+package fr.isen.m2.jee.tarotspreadsheet.web.servlet;
 
 import fr.isen.m2.jee.tarotspreadsheet.dao.SpreadsheetDAO;
+import fr.isen.m2.jee.tarotspreadsheet.web.ServletUtil;
+import fr.isen.m2.jee.tarotspreadsheet.web.Bean.SpreadsheetBean;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -26,21 +28,10 @@ public class SpreadsheetServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        String token = getTokenFromRequest(request);
+        String token = ServletUtil.getTokenFromRequest(request);
         spreadsheet.loadFromToken(token);
         request.getRequestDispatcher("/spreadsheet.jsp").include(request,
                 response);
     }
 
-    private String getTokenFromRequest(HttpServletRequest request) {
-        if (request == null) {
-            return "";
-        }
-
-        String token = request.getRequestURI().substring(request.getContextPath().length()
-                + request.getServletPath().length() + 1);
-
-        return token;
-
-    }
 }

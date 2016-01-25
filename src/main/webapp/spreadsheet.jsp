@@ -9,11 +9,22 @@
 
 <body>
 <h1>Feuille de calcul Tarot </h1>
-<c:forEach var="i" begin="1" end="${spreadsheet.nbPlayer}">
-    <p>Joueur ${i}</p>
-</c:forEach>
+<a href="${pageContext.request.contextPath}/index.jsp">Home</a>
 
-<form method="post" action="/addScore">
+<table>
+    <c:forEach var="player" items="${spreadsheet.players}">
+        <th>${player.name}</th>
+    </c:forEach>
+    <c:forEach var="player" items="${spreadsheet.players}">
+        <tr>
+            <c:forEach var="score" items="${player.scores}">
+                <td>${score.point}</td>
+            </c:forEach>
+        </tr>
+    </c:forEach>
+</table>
+
+<form method="post" action="${pageContext.request.contextPath}/addScore/${spreadsheet.token}">
 
     <table>
         <tr>
@@ -30,7 +41,7 @@
 
         </tr>
         <tr>
-            <td> Appelé</td>
+            <td>Appelé</td>
             <td><select name="appele">
                 <c:forEach var="i" begin="1" end="${spreadsheet.nbPlayer}">
                     <option value="joueur${i}">${i}</option>
@@ -163,7 +174,7 @@
         </tr>
     </table>
 
-    <input type="submit" value="Create"/>
+    <input type="submit" value="Add"/>
 </form>
 </body>
 
