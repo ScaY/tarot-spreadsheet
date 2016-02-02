@@ -54,5 +54,7 @@ public class SpreadsheetBean implements Serializable {
         return spreadsheetAdapter.getPlayers();
     }
 
-
+    public SpreadsheetDAO getDao() {
+        return dao;
+    }
 }

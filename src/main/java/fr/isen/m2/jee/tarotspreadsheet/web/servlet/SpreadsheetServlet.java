@@ -21,9 +21,6 @@ public class SpreadsheetServlet extends HttpServlet {
     @Inject
     SpreadsheetBean spreadsheet;
 
-    @Inject
-    SpreadsheetDAO spreadsheetDAO;
-
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {

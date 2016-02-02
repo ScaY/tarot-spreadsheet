@@ -1,0 +1,51 @@
+.container-right {
+    padding-top: 10px;
+    width: 50%;
+}
+
+.container-left {
+    padding-top: 10px;
+    padding-right: 20px;
+    width: 50%;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    flex: 1 1 auto;
+}
+
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+.header {
+    text-align: center;
+    height: 100px;
+}
+
+.box {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+.box .row {
+    flex: 0 1 30px;
+}
+
+.box .row.header {
+    flex: 0 1 auto;
+}
+
+.box .row.content {
+    flex: 1 1 auto;
+}
+
+.box .row.footer {
+    flex: 0 1 40px;
+}

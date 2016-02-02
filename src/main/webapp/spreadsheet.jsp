@@ -34,7 +34,7 @@
             <td>
                 <select name="joueur">
                     <c:forEach var="i" begin="1" end="${spreadsheet.nbPlayer}">
-                        <option value="joueur${i}">${i}</option>
+                        <option value="${i-1}">${i}</option>
                     </c:forEach>
                 </select>
             </td>
@@ -43,8 +43,9 @@
         <tr>
             <td>Appelé</td>
             <td><select name="appele">
+                <option value="-1">Aucun</option>
                 <c:forEach var="i" begin="1" end="${spreadsheet.nbPlayer}">
-                    <option value="joueur${i}">${i}</option>
+                    <option value="${i-1}">${i}</option>
                 </c:forEach>
             </select></td>
         </tr>
@@ -127,48 +128,10 @@
             </td>
             <td>
                 <select name="chelem_score">
+                    <option value="none">Aucun</option>
                     <option value="callButNotDone">Annoncé mais non faite</option>
                     <option value="notCallButDone">Non annoncé et faite</option>
                     <option value="CallAndDone">Annoncé et faite</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Misère
-            </td>
-            <td>
-                <select name="misere_1">
-                    <option value="0">Aucune</option>
-                    <c:forEach var="i" begin="1" end="${spreadsheet.nbPlayer}">
-                        <option value="joueur${i}">${i}</option>
-                    </c:forEach>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Misère
-            </td>
-            <td>
-                <select name="misere_2">
-                    <option value="0">Aucune</option>
-                    <c:forEach var="i" begin="1" end="${spreadsheet.nbPlayer}">
-                        <option value="joueur${i}">${i}</option>
-                    </c:forEach>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Misère
-            </td>
-            <td>
-                <select name="misere_3">
-                    <option value="0">Aucune</option>
-                    <c:forEach var="i" begin="1" end="${spreadsheet.nbPlayer}">
-                        <option value="joueur${i}">${i}</option>
-                    </c:forEach>
                 </select>
             </td>
         </tr>

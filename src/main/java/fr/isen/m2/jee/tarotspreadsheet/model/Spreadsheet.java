@@ -25,7 +25,6 @@ public class Spreadsheet {
     private String name;
 
     @OneToMany(mappedBy = "spreadsheet", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    @OrderColumn(name = "index")
     private List<Player> players = new ArrayList<>();
 
 

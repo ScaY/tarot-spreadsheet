@@ -1,10 +1,8 @@
 package fr.isen.m2.jee.tarotspreadsheet.core;
 
-import fr.isen.m2.jee.tarotspreadsheet.model.Player;
 import fr.isen.m2.jee.tarotspreadsheet.model.Score;
-import fr.isen.m2.jee.tarotspreadsheet.web.Bean.SpreadsheetBean;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -12,26 +10,19 @@ import java.util.List;
  */
 public class RulesGame {
 
-    private List<Player> players;
-
-
-    public RulesGame(List<Player> players){
-        this.players = players;
-    }
-
-    public void newScore(int nbPlayer,int takenPlayer,int calledPlayer,int nbBout,int score,int contrat,String petitAuBout, int poignee,String poignee_equipe, String chelem_equipe, String chelem_score){
-
+    public static List<Score> newScore(int nbPlayer, int takenPlayer, int calledPlayer, int nbBout, int score, int contrat,
+                                       String petitAuBout, int poignee, String poignee_equipe, String chelem_equipe,
+                                       String chelem_score) {
 
         int realScore = 0;
         boolean isSuccess = false;
 
-
         realScore = score - checknbBout(nbBout);
 
 
-        if (petitAuBout == "attaque") {
+        if (petitAuBout.equals("attaque")) {
             realScore = realScore + 10;
-        } else if (petitAuBout == "defense") {
+        } else if (petitAuBout.equals("defense")) {
             realScore -= 10;
         }
 
@@ -43,57 +34,56 @@ public class RulesGame {
         }
 
         realScore += checkChelem(chelem_equipe, chelem_score);
-
+        List<Score> scores = new LinkedList<>();
         for (int i = 0; i < nbPlayer; i++) {
-            Player p = players.get(i);
+            //Player p = players.get(i);
             if (i == takenPlayer - 1) {
-                p.addScore(getScore(p,realScore,nbPlayer,true,false), true, false, isSuccess);
+                //p.addScore(getScore(p, realScore, nbPlayer, true, false), true, false, isSuccess);
+                scores.add(new Score(getScore(realScore, nbPlayer, false, true), false, true, isSuccess, null));
             } else if (i == calledPlayer - 1) {
-                p.addScore(getScore(p,realScore,nbPlayer,false,true), false, true, isSuccess);
+                // p.addScore(getScore(p, realScore, nbPlayer, false, true), false, true, isSuccess);
+                scores.add(new Score(getScore(realScore, nbPlayer, false, true), false, true, isSuccess, null));
             } else {
-                p.addScore(getScore(p,realScore,nbPlayer,false,false), false, false, isSuccess);
+                // p.addScore(getScore(p, realScore, nbPlayer, false, false), false, false, isSuccess);
+                scores.add(new Score(getScore(realScore, nbPlayer, false, false), false, false, isSuccess, null));
             }
-
         }
 
-        checkPoigneeScore(players, poignee, poignee_equipe, isSuccess, nbPlayer);
+        checkPoigneeScore(scores, poignee, poignee_equipe, isSuccess, nbPlayer);
 
-
+        return scores;
     }
 
-    private void checkPoigneeScore(List<Player> players, int poignee, String equipe, boolean isSuccess, int nbPlayer) {
+
+    private static void checkPoigneeScore(List<Score> scores, int poignee, String equipe, boolean isSuccess, int nbPlayer) {
         if (poignee != 0 && equipe != "none") {
             int poigneeScore = checkPoignee(poignee);
             if (isSuccess) {
-                for (Player p : players) {
-                    if (p.getScores().size() > 0) {
-                        Score currentPlayerScore = p.getLastScore();
+                for (Score currentPlayerScore : scores) {
+                    if (nbPlayer == 4) {
+                        if (currentPlayerScore.isTaken()) {
+                            currentPlayerScore.setPoint(currentPlayerScore.getPoint() + (poigneeScore * 3));
+                        } else {
+                            currentPlayerScore.setPoint(currentPlayerScore.getPoint() - poigneeScore);
+                        }
+                    } else if (nbPlayer == 3) {
+                        if (currentPlayerScore.isTaken()) {
+                            currentPlayerScore.setPoint(currentPlayerScore.getPoint() + (poigneeScore * 2));
+                        } else {
+                            currentPlayerScore.setPoint(currentPlayerScore.getPoint() - poigneeScore);
+                        }
 
-                        if (nbPlayer == 4) {
-                            if (currentPlayerScore.isTaken()) {
-                                currentPlayerScore.setPoint(currentPlayerScore.getPoint() + (poigneeScore * 3));
-                            } else {
-                                currentPlayerScore.setPoint(currentPlayerScore.getPoint() - poigneeScore);
-                            }
-                        } else if (nbPlayer ==3) {
-                            if (currentPlayerScore.isTaken()) {
-                                currentPlayerScore.setPoint(currentPlayerScore.getPoint() + (poigneeScore * 2));
-                            } else {
-                                currentPlayerScore.setPoint(currentPlayerScore.getPoint() - poigneeScore);
-                            }
-
-                        }else{
-                            if (currentPlayerScore.isTaken() || currentPlayerScore.isCalled()) {
-                                currentPlayerScore.setPoint(currentPlayerScore.getPoint() + (poigneeScore * 3 / 2));
-                            } else {
-                                currentPlayerScore.setPoint(currentPlayerScore.getPoint() - poigneeScore);
-                            }
+                    } else {
+                        if (currentPlayerScore.isTaken() || currentPlayerScore.isCalled()) {
+                            currentPlayerScore.setPoint(currentPlayerScore.getPoint() + (poigneeScore * 3 / 2));
+                        } else {
+                            currentPlayerScore.setPoint(currentPlayerScore.getPoint() - poigneeScore);
                         }
                     }
+
                 }
             } else {
-                for (Player p : players) {
-                    Score currentPlayerScore = p.getLastScore();
+                for (Score currentPlayerScore : scores) {
 
                     if (nbPlayer == 4) {
                         if (currentPlayerScore.isTaken()) {
@@ -116,7 +106,7 @@ public class RulesGame {
     }
 
 
-    public int checkPoignee(int poignee) {
+    private static int checkPoignee(int poignee) {
         switch (poignee) {
             case 1:
                 return 20;
@@ -130,8 +120,7 @@ public class RulesGame {
     }
 
 
-
-    public int checkChelem(String equipe, String ChelemScore) {
+    private static int checkChelem(String equipe, String ChelemScore) {
         int score = 0;
         if (equipe == "none") {
             return score;
@@ -152,7 +141,7 @@ public class RulesGame {
         }
     }
 
-    public int checknbBout(int nbBout) {
+    private static int checknbBout(int nbBout) {
         int musthaveValue = 0;
         switch (nbBout) {
             case 0:
@@ -173,7 +162,7 @@ public class RulesGame {
         return musthaveValue;
     }
 
-    public int checkContrat(int contrat) {
+    private static int checkContrat(int contrat) {
         int multiplicator = 1;
         switch (contrat) {
             case 1:
@@ -191,7 +180,7 @@ public class RulesGame {
         return multiplicator;
     }
 
-    public int getScore(Player p, int realScore,int nbPlayer, boolean isTaken, boolean isCalled) {
+    private static int getScore(int realScore, int nbPlayer, boolean isTaken, boolean isCalled) {
         int score = 0;
         if (nbPlayer == 4) {
             if (isTaken) {
@@ -210,6 +199,5 @@ public class RulesGame {
         }
         return score;
     }
-
 
 }

@@ -25,11 +25,14 @@ public class Player {
     private Spreadsheet spreadsheet;
 
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @OrderColumn(name = "index")
     private List<Score> scores = new ArrayList<>();
 
     public Player() {
         this(null, null);
+    }
+
+    public Player(String name) {
+        this(name, null);
     }
 
     public Player(String name, Spreadsheet spreadsheet) {
@@ -72,5 +75,10 @@ public class Player {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public Player clone() throws CloneNotSupportedException {
+        return new Player(name, spreadsheet);
     }
 }

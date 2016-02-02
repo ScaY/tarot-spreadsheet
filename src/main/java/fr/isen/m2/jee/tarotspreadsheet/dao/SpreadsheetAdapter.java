@@ -42,13 +42,17 @@ public class SpreadsheetAdapter {
 
     public void addPlayer(String name) {
         Player player = new Player(name, spreadsheet);
-        player.addScore(42, false, false, false);
         spreadsheet.addPlayer(player);
         spreadsheetDAO.save(spreadsheet);
     }
 
     public void addScore(String name, int point, boolean isTaken, boolean isCalled, boolean isSuccess) {
         spreadsheet.getPlayer(name).addScore(point, isTaken, isCalled, isSuccess);
+        spreadsheetDAO.save(spreadsheet);
+    }
+
+    public void addScore(int idPlayer, int point, boolean isTaken, boolean isCalled, boolean isSuccess) {
+        spreadsheet.getPlayers().get(idPlayer).addScore(point, isTaken, isCalled, isSuccess);
         spreadsheetDAO.save(spreadsheet);
     }
 

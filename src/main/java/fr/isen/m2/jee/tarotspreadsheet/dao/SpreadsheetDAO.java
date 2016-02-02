@@ -77,17 +77,15 @@ public class SpreadsheetDAO extends DAO {
     public void deleteFromToken(String token) {
         try {
             Spreadsheet spreadsheet = (Spreadsheet) em.createQuery(GET_SPREADSHEET).setParameter("token", token).getSingleResult();
-/*            List<Player> players = spreadsheet.getPlayers();
+            List<Player> players = spreadsheet.getPlayers();
             // Removing the score
-            for (Player player : players) {
+   /*         for (Player player : players) {
                 scoreDAO.delete(player.getId());
                 playerDAO.deleteById(player.getId());
             }*/
             ut.begin();
             Spreadsheet spreadsheet1 = em.find(Spreadsheet.class, spreadsheet.getId());
-            if (spreadsheet1 != null)
-            {
-                em.merge(spreadsheet1);
+            if (spreadsheet1 != null) {
                 em.remove(spreadsheet1);
             }
             /*em.merge(spreadsheet);

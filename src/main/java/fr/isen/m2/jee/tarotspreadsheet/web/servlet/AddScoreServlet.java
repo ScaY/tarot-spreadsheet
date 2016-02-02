@@ -34,9 +34,6 @@ public class AddScoreServlet extends HttpServlet {
     private String poignee_equipe;
     private String chelem_equipe;
     private String chelem_score;
-    private int firstMisere;
-    private int secondMisere;
-    private int thirdMisere;
 
 
     @Override
@@ -55,16 +52,25 @@ public class AddScoreServlet extends HttpServlet {
         this.poignee_equipe = req.getParameter("poignee_equipe");
         this.chelem_equipe = req.getParameter("chelem_equipe");
         this.chelem_score = req.getParameter("chelem_score");
-        this.firstMisere = Integer.valueOf(req.getParameter("misere_1"));
-        this.secondMisere = Integer.valueOf(req.getParameter("misere_2"));
-        this.thirdMisere = Integer.valueOf(req.getParameter("misere_3"));
 
+        log("NbPlayer "+nbPlayer);
+        log("takenPlayer "+takenPlayer);
+        log("calledPlaer "+calledPlayer);
+        log("nbBout "+nbBout);
+        log("score "+score);
+        log("contrat "+contrat);
+        log("petitaubout "+petitAuBout);
+        log("poignee "+poignee);
+        log("poigneeequie "+poignee_equipe);
+        log("chelem equipe "+chelem_equipe);
+        log("chelem score "+chelem_score);
 
-        RulesGame rules = new RulesGame(this.spreadsheetBean.getPlayers());
-        rules.newScore(nbPlayer, takenPlayer, calledPlayer, nbBout, score, contrat, petitAuBout, poignee, poignee_equipe, chelem_equipe, chelem_score);
+      /*  RulesGame rules = new RulesGame(this.spreadsheetBean.getPlayers());
+        rules.newScore(nbPlayer, takenPlayer, calledPlayer, nbBout, score, contrat, petitAuBout, poignee,
+                poignee_equipe, chelem_equipe, chelem_score, spreadsheetBean.getSpreadsheetAdapter());
 
         resp.sendRedirect(req.getContextPath() + "/s/" + spreadsheetBean.getSpreadsheetAdapter().getSpreadsheet().getToken());
-
+*/
 
     }
 }
