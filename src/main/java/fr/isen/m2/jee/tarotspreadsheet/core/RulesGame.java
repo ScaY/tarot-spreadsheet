@@ -12,10 +12,10 @@ import java.util.List;
  */
 public class RulesGame {
 
-    private ArrayList<Player> players;
+    private List<Player> players;
 
 
-    public RulesGame(ArrayList<Player> players){
+    public RulesGame(List<Player> players){
         this.players = players;
     }
 
