@@ -36,15 +36,15 @@ public class RulesGame {
         realScore += checkChelem(chelem_equipe, chelem_score);
         List<Score> scores = new LinkedList<>();
         for (int i = 0; i < nbPlayer; i++) {
-            //Player p = players.get(i);
             if (i == takenPlayer - 1) {
-                //p.addScore(getScore(p, realScore, nbPlayer, true, false), true, false, isSuccess);
-                scores.add(new Score(getScore(realScore, nbPlayer, true, false), true, false, isSuccess, null));
+                if (takenPlayer -1 == calledPlayer - 1 && nbPlayer == 5){
+                    scores.add(new Score(getScore(realScore, nbPlayer, true, true), true, true, isSuccess, null));
+                }else{
+                    scores.add(new Score(getScore(realScore, nbPlayer, true, false), true, false, isSuccess, null));
+                }
             } else if (i == calledPlayer - 1) {
-                // p.addScore(getScore(p, realScore, nbPlayer, false, true), false, true, isSuccess);
                 scores.add(new Score(getScore(realScore, nbPlayer, false, true), false, true, isSuccess, null));
             } else {
-                // p.addScore(getScore(p, realScore, nbPlayer, false, false), false, false, isSuccess);
                 scores.add(new Score(getScore(realScore, nbPlayer, false, false), false, false, isSuccess, null));
             }
         }
@@ -56,7 +56,7 @@ public class RulesGame {
 
 
     private static void checkPoigneeScore(List<Score> scores, int poignee, String equipe, boolean isSuccess, int nbPlayer) {
-        if (poignee != 0 && equipe.equals("none")) {
+        if (poignee != 0 && !equipe.equals("none")) {
             int poigneeScore = checkPoignee(poignee);
             if (isSuccess) {
                 for (Score currentPlayerScore : scores) {
@@ -74,9 +74,13 @@ public class RulesGame {
                         }
 
                     } else {
-                        if (currentPlayerScore.isTaken() || currentPlayerScore.isCalled()) {
-                            currentPlayerScore.setPoint(currentPlayerScore.getPoint() + (poigneeScore * 3 / 2));
-                        } else {
+                        if (currentPlayerScore.isTaken()) {
+                            currentPlayerScore.setPoint(currentPlayerScore.getPoint() + (poigneeScore * 2));
+                        } else if (currentPlayerScore.isCalled()){
+                            currentPlayerScore.setPoint(currentPlayerScore.getPoint() + (poigneeScore));
+
+                        }else{
+
                             currentPlayerScore.setPoint(currentPlayerScore.getPoint() - poigneeScore);
                         }
                     }
@@ -190,7 +194,11 @@ public class RulesGame {
             }
         } else {
             if (isTaken) {
-                score = realScore * 2;
+                if (isCalled){
+                    score = realScore * 4;
+                }else{
+                    score = realScore * 2;
+                }
             } else if (isCalled) {
                 score = realScore;
             } else {
