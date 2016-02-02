@@ -7,7 +7,7 @@ public enum Bout {
     GOT0(56),
     GOT1(51),
     GOT2(41),
-    GOT3(31);
+    GOT3(36);
 
     private final int value;
 
