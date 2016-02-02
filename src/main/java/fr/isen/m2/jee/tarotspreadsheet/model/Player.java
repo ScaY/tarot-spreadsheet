@@ -66,7 +66,11 @@ public class Player {
     }
 
     public Score getLastScore() {
-        return this.scores.get(this.scores.size() - 1);
+        if (scores.isEmpty()) {
+            return null;
+        } else {
+            return this.scores.get(this.scores.size() - 1);
+        }
     }
 
     public void addScore(int point, boolean isTaken, boolean isCalled, boolean isSuccess) {

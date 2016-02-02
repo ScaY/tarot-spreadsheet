@@ -53,24 +53,38 @@ public class AddScoreServlet extends HttpServlet {
         this.chelem_equipe = req.getParameter("chelem_equipe");
         this.chelem_score = req.getParameter("chelem_score");
 
-        log("NbPlayer "+nbPlayer);
-        log("takenPlayer "+takenPlayer);
-        log("calledPlaer "+calledPlayer);
-        log("nbBout "+nbBout);
-        log("score "+score);
-        log("contrat "+contrat);
-        log("petitaubout "+petitAuBout);
-        log("poignee "+poignee);
-        log("poigneeequie "+poignee_equipe);
-        log("chelem equipe "+chelem_equipe);
-        log("chelem score "+chelem_score);
+        log("NbPlayer " + nbPlayer);
+        log("takenPlayer " + takenPlayer);
+        log("calledPlaer " + calledPlayer);
+        log("nbBout " + nbBout);
+        log("score " + score);
+        log("contrat " + contrat);
+        log("petitaubout " + petitAuBout);
+        log("poignee " + poignee);
+        log("poigneeequie " + poignee_equipe);
+        log("chelem equipe " + chelem_equipe);
+        log("chelem score " + chelem_score);
 
-      /*  RulesGame rules = new RulesGame(this.spreadsheetBean.getPlayers());
-        rules.newScore(nbPlayer, takenPlayer, calledPlayer, nbBout, score, contrat, petitAuBout, poignee,
-                poignee_equipe, chelem_equipe, chelem_score, spreadsheetBean.getSpreadsheetAdapter());
+
+        // Retrieving the score
+        List<Score> scores = RulesGame.newScore(nbPlayer, takenPlayer, calledPlayer, nbBout, score, contrat, petitAuBout, poignee,
+                poignee_equipe, chelem_equipe, chelem_score);
+
+        for(Player player : spreadsheetBean.getPlayers()){
+            log("Player "+player.getName()+" nbScore :"+player.getScores().size());
+        }
+        // Adding the scores in the database
+        for (int i = 0; i < scores.size(); i++) {
+            Player currentPlayer = spreadsheetBean.getPlayers().get(i);
+            Score currentScore = scores.get(i);
+            log("THe score is : " + currentScore.getPoint() + " for " + currentPlayer.getName());
+            currentScore.setPlayer(currentPlayer);
+            spreadsheetBean.getSpreadsheetAdapter().addScore(i, currentScore.getPoint(), currentScore.isTaken(),
+                    currentScore.isCalled(), currentScore.isSuccess());
+        }
 
         resp.sendRedirect(req.getContextPath() + "/s/" + spreadsheetBean.getSpreadsheetAdapter().getSpreadsheet().getToken());
-*/
+
 
     }
 }

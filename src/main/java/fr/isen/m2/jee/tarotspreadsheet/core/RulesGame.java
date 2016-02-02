@@ -39,7 +39,7 @@ public class RulesGame {
             //Player p = players.get(i);
             if (i == takenPlayer - 1) {
                 //p.addScore(getScore(p, realScore, nbPlayer, true, false), true, false, isSuccess);
-                scores.add(new Score(getScore(realScore, nbPlayer, false, true), false, true, isSuccess, null));
+                scores.add(new Score(getScore(realScore, nbPlayer, true, false), true, false, isSuccess, null));
             } else if (i == calledPlayer - 1) {
                 // p.addScore(getScore(p, realScore, nbPlayer, false, true), false, true, isSuccess);
                 scores.add(new Score(getScore(realScore, nbPlayer, false, true), false, true, isSuccess, null));
@@ -56,7 +56,7 @@ public class RulesGame {
 
 
     private static void checkPoigneeScore(List<Score> scores, int poignee, String equipe, boolean isSuccess, int nbPlayer) {
-        if (poignee != 0 && equipe != "none") {
+        if (poignee != 0 && equipe.equals("none")) {
             int poigneeScore = checkPoignee(poignee);
             if (isSuccess) {
                 for (Score currentPlayerScore : scores) {
@@ -122,19 +122,19 @@ public class RulesGame {
 
     private static int checkChelem(String equipe, String ChelemScore) {
         int score = 0;
-        if (equipe == "none") {
+        if (equipe.equals("none")) {
             return score;
         }
 
-        if (ChelemScore == "callButNotDone") {
+        if (ChelemScore.equals("callButNotDone")) {
             score = -200;
-        } else if (ChelemScore == "notCallButDone") {
+        } else if (ChelemScore.equals("notCallButDone")) {
             score = 200;
         } else {
             score = 400;
         }
 
-        if (equipe == "attaque") {
+        if (equipe.equals("attaque")) {
             return score;
         } else {
             return -score;

@@ -34,7 +34,7 @@
             <td>
                 <select name="joueur">
                     <c:forEach var="i" begin="1" end="${spreadsheet.nbPlayer}">
-                        <option value="${i-1}">${i}</option>
+                        <option value="${i}">${i}</option>
                     </c:forEach>
                 </select>
             </td>
