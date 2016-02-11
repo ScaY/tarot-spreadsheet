@@ -55,7 +55,8 @@ public class PlayerDAO extends DAO {
         try {
             ut.begin();
             Player player = (Player) em.createQuery(GET_PLAYER_BY_ID).setParameter("id", id).getSingleResult();
-            em.remove(player);
+            Player playerToRemove = em.merge(player);
+            em.remove(playerToRemove);
             ut.commit();
         } catch (SecurityException | IllegalStateException | RollbackException
                 | HeuristicMixedException | HeuristicRollbackException

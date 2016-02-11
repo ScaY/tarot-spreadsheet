@@ -1,6 +1,7 @@
 package fr.isen.m2.jee.tarotspreadsheet.dao;
 
 import fr.isen.m2.jee.tarotspreadsheet.model.Score;
+import org.apache.commons.logging.Log;
 
 import javax.persistence.NoResultException;
 import javax.transaction.*;
@@ -57,19 +58,18 @@ public class ScoreDAO extends DAO {
         }
     }
 
-    public void delete(Long playerId) {
+    public void delete(Long idScore) {
         try {
             ut.begin();
-            List<Score> scores = em.createQuery(GET_SCORE_BY_PLAYER_ID).setParameter("playerId", playerId).getResultList();
-            for (Score s : scores) {
-                em.remove(s);
-            }
+            Score score = em.find(Score.class, idScore);
+            Score scoreToRemove = em.merge(score);
+            em.remove(scoreToRemove);
             ut.commit();
         } catch (SecurityException | IllegalStateException | RollbackException
                 | HeuristicMixedException | HeuristicRollbackException
                 | SystemException | NotSupportedException e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
-
     }
 }

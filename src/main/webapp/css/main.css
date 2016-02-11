@@ -16,7 +16,6 @@
     flex: 1 1 auto;
 }
 
-
 html,
 body {
     height: 100%;
@@ -48,4 +47,8 @@ body {
 
 .box .row.footer {
     flex: 0 1 40px;
+}
+
+td {
+    padding: 0px 5px 5px 5px;
 }

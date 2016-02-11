@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Tarot spreadsheet</title>
+    <title>Feuille de calcul Tarot</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
@@ -18,7 +18,7 @@
 
 <div class="box">
     <div class="row header">
-        <h1>Tarot Spreadsheet</h1>
+        <h1>Feuille de calcul Tarot </h1>
     </div>
 
     <div class="row content body">
@@ -30,21 +30,18 @@
                         <input type="text" class="form-control" name="nom_feuille" id="inputName" placeholder="Nom...">
                     </div>
                     <div class="form-group">
-                        <label for="selectNbPlayer">Nombre de joeur</label>
+                        <label for="selectNbPlayer">Nombre de joueurs</label>
                         <select name="nb_joueur" class="form-control" id="selectNbPlayer">
                             <option value="3">3</option>
                             <option value="4">4</option>
                             <option value="5">5</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-default">Créer</button>
+                    <button id="submitSpreadsheet" type="submit" class="btn btn-default">Créer</button>
                 </form>
             </div>
-            <div class="container-right">
-                <table class="table table-striped" >
-                    <th>Name</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+            <div class="container-right" id="tableSpreadsheet">
+                <table class="table table-striped">
                     <c:forEach var="nameSpreadsheet" items="${listSpreadsheet.spreadsheetList}">
                         <tr>
                             <td>${nameSpreadsheet.value}</td>
@@ -60,7 +57,3 @@
 </body>
 
 </html>
-<div>
-
-
-

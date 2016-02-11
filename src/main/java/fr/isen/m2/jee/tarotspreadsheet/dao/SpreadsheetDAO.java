@@ -1,6 +1,7 @@
 package fr.isen.m2.jee.tarotspreadsheet.dao;
 
 import fr.isen.m2.jee.tarotspreadsheet.model.Player;
+import fr.isen.m2.jee.tarotspreadsheet.model.Score;
 import fr.isen.m2.jee.tarotspreadsheet.model.Spreadsheet;
 import org.apache.commons.lang.RandomStringUtils;
 
@@ -78,18 +79,23 @@ public class SpreadsheetDAO extends DAO {
         try {
             Spreadsheet spreadsheet = (Spreadsheet) em.createQuery(GET_SPREADSHEET).setParameter("token", token).getSingleResult();
             List<Player> players = spreadsheet.getPlayers();
-            // Removing the score
-   /*         for (Player player : players) {
-                scoreDAO.delete(player.getId());
+            // Removing the players
+            for (int i = 0; i < players.size(); i++) {
+                Player player = players.get(i);
+                List<Score> scores = player.getScores();
+                // Removing the scores
+                for (int j = 0; j < scores.size(); j++) {
+                    Score score = scores.get(j);
+                    player.getScores().remove(score);
+                    scoreDAO.delete(score.getId());
+                }
+                spreadsheet.getPlayers().remove(player);
                 playerDAO.deleteById(player.getId());
-            }*/
-            ut.begin();
-            Spreadsheet spreadsheet1 = em.find(Spreadsheet.class, spreadsheet.getId());
-            if (spreadsheet1 != null) {
-                em.remove(spreadsheet1);
             }
-            /*em.merge(spreadsheet);
-            em.remove(spreadsheet);*/
+            // Removing the spreadsheet
+            ut.begin();
+            Spreadsheet spreadsheetToRemove = em.merge(spreadsheet);
+            em.remove(spreadsheetToRemove);
             ut.commit();
         } catch (SecurityException | IllegalStateException | RollbackException
                 | HeuristicMixedException | HeuristicRollbackException
@@ -113,6 +119,7 @@ public class SpreadsheetDAO extends DAO {
                 | SystemException | NotSupportedException e) {
             e.printStackTrace();
         }
-
     }
+
+
 }
