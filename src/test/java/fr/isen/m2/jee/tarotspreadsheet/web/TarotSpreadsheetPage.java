@@ -5,8 +5,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 
-import java.sql.Driver;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TarotSpreadsheetPage {
@@ -20,6 +21,24 @@ public class TarotSpreadsheetPage {
     @FindBy(id = "submitSpreadsheet")
     WebElement submitSpreadsheet;
 
+    @FindBy(id = "point")
+    WebElement point;
+
+    @FindBy(id = "joueur_taken")
+    WebElement joueurTaken;
+
+    @FindBy(id = "nb_bout")
+    WebElement nb_bout;
+
+    @FindBy(id = "contrat")
+    WebElement contrat;
+
+    @FindBy(id = "add_score")
+    WebElement add_score;
+
+    @FindBy(id = "table_point")
+    WebElement tablePoints;
+
     public TarotSpreadsheetPage(WebDriver driver) {
         driver.get("http://localhost:9090/tarotspreadsheet/index.jsp");
     }
@@ -30,7 +49,7 @@ public class TarotSpreadsheetPage {
     }
 
     public int getSpreadsheetNumber() {
-        String xpath = "//tbody";
+        String xpath = "//tbody/tr";
         List<WebElement> cells = Lists.reverse(tableSpreadsheet.findElements(By.xpath(xpath)));
         return cells.size();
     }
@@ -38,6 +57,35 @@ public class TarotSpreadsheetPage {
     public void goToSpreadsheetCreated() {
         String xpath = "//tbody/tr/td/a";
         List<WebElement> cells = Lists.reverse(tableSpreadsheet.findElements(By.xpath(xpath)));
-        cells.get(1).click();
+        cells.get(cells.size() - 1).click();
+    }
+
+    public void addScore(int idPlayer, int nbAtout, int idContrat, int nbPoint) {
+        Select selectPlayer = new Select(joueurTaken);
+        selectPlayer.selectByIndex(idPlayer);
+        Select selectAtout = new Select(nb_bout);
+        selectAtout.selectByIndex(nbAtout);
+        Select selectContrat = new Select(contrat);
+        selectContrat.selectByIndex(idContrat);
+        point.sendKeys(String.valueOf(nbPoint));
+        add_score.click();
+    }
+
+    public List<Integer> getLastScores() {
+        String xpath = "//tbody/tr/td";
+        List<WebElement> trItems = Lists.reverse(tablePoints.findElements(By.xpath(xpath)));
+
+        List<Integer> result = new ArrayList<>();
+        for (WebElement trItem : trItems) {
+            try {
+                int value = Integer.valueOf(trItem.getText());
+                result.add(value);
+            } catch (NumberFormatException e) {
+
+            }
+        }
+
+
+        return result;
     }
 }

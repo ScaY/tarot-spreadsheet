@@ -122,11 +122,11 @@
                         </tr>
                     </table>
 
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">Ajouter</button>
+                    <button type="submit" id="add_score" class="btn btn-primary btn-lg btn-block">Ajouter</button>
                 </form>
             </div>
             <div class="container-right">
-                <table class="table table-striped">
+                <table id="table_point" class="table table-striped">
                     <c:forEach var="player" items="${spreadsheet.players}">
                         <th>${player.name}</th>
                     </c:forEach>
