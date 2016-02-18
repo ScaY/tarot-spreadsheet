@@ -23,9 +23,9 @@ public class CreateSpreadsheetServlet extends HttpServlet {
         // Create the spreadsheet and add the player
         spreadsheet.createNewSpreadsheet(name);
         for (int i = 0; i < nbPlayer; i++) {
-            spreadsheet.getSpreadsheetAdapter().addPlayer("player" + i);
+            spreadsheet.getSpreadsheetAdapter().addPlayer("Player " + i);
         }
-        //req.getSession().setAttribute("spreadsheetBean", spreadsheet);
+
         resp.sendRedirect(req.getContextPath()
                 + req.getServletPath().replace("createSpreadsheet", "") + "s/" + spreadsheet.getToken());
     }

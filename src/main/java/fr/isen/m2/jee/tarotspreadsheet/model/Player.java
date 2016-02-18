@@ -1,5 +1,7 @@
 package fr.isen.m2.jee.tarotspreadsheet.model;
 
+import sun.rmi.runtime.Log;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -85,4 +87,13 @@ public class Player {
     public Player clone() throws CloneNotSupportedException {
         return new Player(name, spreadsheet);
     }
+
+    public int getTotalScore() {
+        int result = 0;
+        for (Score score : scores) {
+            result += score.getPoint();
+        }
+        return result;
+    }
+
 }

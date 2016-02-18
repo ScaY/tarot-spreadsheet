@@ -53,6 +53,7 @@ public class AddScoreServlet extends HttpServlet {
         this.chelem_equipe = req.getParameter("chelem_equipe");
         this.chelem_score = req.getParameter("chelem_score");
 
+        System.out.println("Test sysout print ln    ");
         log("NbPlayer " + nbPlayer);
         log("takenPlayer " + takenPlayer);
         log("calledPlaer " + calledPlayer);

@@ -8,6 +8,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Named("spreadsheet")
@@ -50,11 +52,26 @@ public class SpreadsheetBean implements Serializable {
         return spreadsheetAdapter.getToken();
     }
 
-    public List<Player> getPlayers(){
-        return spreadsheetAdapter.getPlayers();
+    public List<Player> getPlayers() {
+        List<Player> list = spreadsheetAdapter.getPlayers();
+        Collections.sort(list, new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                int id1 = Integer.valueOf(o1.getName().substring(o1.getName().length() - 1));
+                int id2 = Integer.valueOf(o2.getName().substring(o1.getName().length() - 1));
+                if (id1 < id2) {
+                    return -1;
+                } else if (id1 > id2) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
+        return list;
     }
 
     public SpreadsheetDAO getDao() {
         return dao;
     }
+
 }

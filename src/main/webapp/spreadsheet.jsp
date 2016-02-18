@@ -137,6 +137,13 @@
                             </c:forEach>
                         </tr>
                     </c:forEach>
+                    <tfoot>
+                    <tr>
+                        <c:forEach var="player" items="${spreadsheet.players}">
+                            <td>${player.getTotalScore()}</td>
+                        </c:forEach>
+                    </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
