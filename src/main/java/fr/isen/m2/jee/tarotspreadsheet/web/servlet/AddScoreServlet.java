@@ -61,9 +61,6 @@ public class AddScoreServlet extends HttpServlet {
             log("Error when retrieving the score");
         }
 
-        if (!scoreCheck) {
-            return;
-        }
 
         log("NbPlayer " + nbPlayer);
         log("takenPlayer " + takenPlayer);
@@ -77,18 +74,20 @@ public class AddScoreServlet extends HttpServlet {
         log("chelem equipe " + chelem_equipe);
         log("chelem score " + chelem_score);
 
-        // Retrieving the score
-        List<Score> scores = RulesGame.newScore(nbPlayer, takenPlayer, calledPlayer, nbBout, score, contrat, petitAuBout, poignee,
-                poignee_equipe, chelem_equipe, chelem_score);
+        if (scoreCheck) {
+            // Retrieving the score
+            List<Score> scores = RulesGame.newScore(nbPlayer, takenPlayer, calledPlayer, nbBout, score, contrat, petitAuBout, poignee,
+                    poignee_equipe, chelem_equipe, chelem_score);
 
-        // Adding the scores in the database
-        for (int i = 0; i < scores.size(); i++) {
-            Player currentPlayer = spreadsheetBean.getPlayers().get(i);
-            Score currentScore = scores.get(i);
-            log("THe score is : " + currentScore.getPoint() + " for " + currentPlayer.getName());
-            currentScore.setPlayer(currentPlayer);
-            spreadsheetBean.getSpreadsheetAdapter().addScore(i, currentScore.getPoint(), currentScore.isTaken(),
-                    currentScore.isCalled(), currentScore.isSuccess());
+            // Adding the scores in the database
+            for (int i = 0; i < scores.size(); i++) {
+                Player currentPlayer = spreadsheetBean.getPlayers().get(i);
+                Score currentScore = scores.get(i);
+                log("THe score is : " + currentScore.getPoint() + " for " + currentPlayer.getName());
+                currentScore.setPlayer(currentPlayer);
+                spreadsheetBean.getSpreadsheetAdapter().addScore(i, currentScore.getPoint(), currentScore.isTaken(),
+                        currentScore.isCalled(), currentScore.isSuccess());
+            }
         }
 
         resp.sendRedirect(req.getContextPath() + "/s/" + spreadsheetBean.getSpreadsheetAdapter().getSpreadsheet().getToken());

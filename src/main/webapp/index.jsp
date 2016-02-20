@@ -46,7 +46,6 @@
                         <tr>
                             <td>${nameSpreadsheet.value}</td>
                             <td><a name="${nameSpreadsheet.value}" href="./s/${nameSpreadsheet.key}">Edit</a></td>
-                            <td><a href="./deleteSpreadsheet/${nameSpreadsheet.key}">Delete</a></td>
                         </tr>
                     </c:forEach>
                 </table>
