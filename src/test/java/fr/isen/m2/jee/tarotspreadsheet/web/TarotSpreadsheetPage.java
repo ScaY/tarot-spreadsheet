@@ -24,6 +24,9 @@ public class TarotSpreadsheetPage {
     @FindBy(id = "point")
     WebElement point;
 
+    @FindBy(id = "selectNbPlayer")
+    WebElement selectNbPlayer;
+
     @FindBy(id = "joueur_taken")
     WebElement joueurTaken;
 
@@ -48,16 +51,26 @@ public class TarotSpreadsheetPage {
         submitSpreadsheet.click();
     }
 
+    public boolean hasHomePage() {
+        return inputName.isDisplayed() && tableSpreadsheet.isDisplayed() && selectNbPlayer.isDisplayed();
+    }
+
     public int getSpreadsheetNumber() {
         String xpath = "//tbody/tr";
         List<WebElement> cells = Lists.reverse(tableSpreadsheet.findElements(By.xpath(xpath)));
         return cells.size();
     }
 
-    public void goToSpreadsheetCreated() {
+    public void goToSpreadsheetCreated(String name) {
         String xpath = "//tbody/tr/td/a";
         List<WebElement> cells = Lists.reverse(tableSpreadsheet.findElements(By.xpath(xpath)));
-        cells.get(cells.size() - 1).click();
+        boolean found = false;
+        for (int i = 0; i < cells.size() && !found; i++) {
+            if (cells.get(i).getAttribute("name").equals(name)) {
+                cells.get(i).click();
+                found = true;
+            }
+        }
     }
 
     public void addScore(int idPlayer, int nbAtout, int idContrat, int nbPoint) {
@@ -71,20 +84,27 @@ public class TarotSpreadsheetPage {
         add_score.click();
     }
 
-    public List<Integer> getLastScores() {
+    public List<Integer> getScore() {
         String xpath = "//tbody/tr/td";
         List<WebElement> trItems = Lists.reverse(tablePoints.findElements(By.xpath(xpath)));
+        return retrieveItemFromWebElement(trItems);
+    }
 
+    public List<Integer> getTotalScore() {
+        String xpath = "//tfoot/tr/td";
+        List<WebElement> trItems = Lists.reverse(tablePoints.findElements(By.xpath(xpath)));
+        return retrieveItemFromWebElement(trItems);
+    }
+
+    private List<Integer> retrieveItemFromWebElement(List<WebElement> trItems) {
         List<Integer> result = new ArrayList<>();
         for (WebElement trItem : trItems) {
             try {
                 int value = Integer.valueOf(trItem.getText());
                 result.add(value);
             } catch (NumberFormatException e) {
-
             }
         }
-
 
         return result;
     }

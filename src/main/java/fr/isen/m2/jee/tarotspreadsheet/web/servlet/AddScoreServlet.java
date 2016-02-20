@@ -45,7 +45,6 @@ public class AddScoreServlet extends HttpServlet {
         this.takenPlayer = Integer.valueOf(req.getParameter("joueur"));
         this.calledPlayer = Integer.valueOf(req.getParameter("appele"));
         this.nbBout = Integer.valueOf(req.getParameter("nb_bout"));
-        this.score = Integer.valueOf(req.getParameter("point"));
         this.contrat = Integer.valueOf(req.getParameter("contrat"));
         this.petitAuBout = req.getParameter("petit_au_bout");
         this.poignee = Integer.valueOf(req.getParameter("poignee"));
@@ -53,7 +52,19 @@ public class AddScoreServlet extends HttpServlet {
         this.chelem_equipe = req.getParameter("chelem_equipe");
         this.chelem_score = req.getParameter("chelem_score");
 
-        System.out.println("Test sysout print ln    ");
+
+        boolean scoreCheck = false;
+        try {
+            this.score = Integer.valueOf(req.getParameter("point"));
+            scoreCheck = true;
+        } catch (NumberFormatException e) {
+            log("Error when retrieving the score");
+        }
+
+        if (!scoreCheck) {
+            return;
+        }
+
         log("NbPlayer " + nbPlayer);
         log("takenPlayer " + takenPlayer);
         log("calledPlaer " + calledPlayer);
@@ -66,14 +77,10 @@ public class AddScoreServlet extends HttpServlet {
         log("chelem equipe " + chelem_equipe);
         log("chelem score " + chelem_score);
 
-
         // Retrieving the score
         List<Score> scores = RulesGame.newScore(nbPlayer, takenPlayer, calledPlayer, nbBout, score, contrat, petitAuBout, poignee,
                 poignee_equipe, chelem_equipe, chelem_score);
 
-        for(Player player : spreadsheetBean.getPlayers()){
-            log("Player "+player.getName()+" nbScore :"+player.getScores().size());
-        }
         // Adding the scores in the database
         for (int i = 0; i < scores.size(); i++) {
             Player currentPlayer = spreadsheetBean.getPlayers().get(i);
@@ -85,7 +92,6 @@ public class AddScoreServlet extends HttpServlet {
         }
 
         resp.sendRedirect(req.getContextPath() + "/s/" + spreadsheetBean.getSpreadsheetAdapter().getSpreadsheet().getToken());
-
-
     }
+
 }
